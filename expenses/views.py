@@ -18,27 +18,17 @@ def home(request):
 
 @login_required
 def dashboard(request):
-    if request.method == "GET":
-        pass
-
     categories = Category.objects.annotate(
         total=Sum('expense__cost', filter=Q(expense__user=request.user))
     )
+
     expenses_list = Expense.objects.filter(user=request.user)
-
-    user_categories = UserCategory.objects.filter(user=request.user).select_related('category')
-
-    category_totals = {}
-    for category in categories:
-        total = expenses_list.filter(category=category).aggregate(Sum('cost'))['cost__sum'] or 0
-        category_totals[category.id] = total
 
     context = {
         "categories": categories,
         "expenses_list": expenses_list,
-        "category_totals": category_totals,
-        "user_categories": user_categories
     }
+
     return render(request, "expenses/dashboard.html", context)
 
 
