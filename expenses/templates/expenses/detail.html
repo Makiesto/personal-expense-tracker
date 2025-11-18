@@ -1,0 +1,21 @@
+{% extends "expenses/base.html" %}
+
+{% block title %}Details{% endblock %}
+
+{% block content %}
+    {% if user.is_authenticated %}
+        <h1>{{ category.name }}</h1>
+        <ul>
+            {% for expense in category.expense_set.all %}
+                <div>
+                    {{ expense.expense_text }} ${{ expense.cost }} {{ expense.description }}
+                    <a href="{% url 'expenses:remove' expense_id=expense.id %}">Remove</a>
+                </div>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>You are not logged in</p>
+        <a href="{% url 'login' %}">Log In</a><br>
+        <a href="{% url 'signup' %}">Sign up</a>
+    {% endif %}
+{% endblock %}

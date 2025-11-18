@@ -1,0 +1,54 @@
+{% extends "expenses/base.html" %}
+{% block title %}Expenses Tracker{% endblock %}
+
+{% block content %}
+    {% if user.is_authenticated %}
+
+        <h1>Expense Tracker</h1>
+        <h2>Categories</h2>
+        {% if categories %}
+            <div>
+                {% for category in categories %}
+                    <div class="category">
+                        <a href=" {% url 'expenses:detail' category_id=category.id %} ">{{ category.name }}</a>
+                        ${{ category.total|default:0 }}
+                    </div>
+
+                {% endfor %}
+            </div>
+        {% else %}
+            <p>No categories are available.</p>
+        {% endif %}
+
+        <h2>Expenses</h2>
+        {% if expenses_list %}
+            <div>
+                {% for expense in expenses_list %}
+                    {#            <li><a href="{% url 'expenses:detail' category.id %}">{{ category.category_text }}</a></li>#}
+                    <div>{{ expense.expense_text }} ${{ expense.cost }} {{ expense.category }} Created
+                        at: {{ expense.created_at }} Modified at: {{ expense.updated_at }}</div>
+                {% endfor %}
+            </div>
+        {% else %}
+            <p>No expenses are available.</p>
+        {% endif %}
+
+        <form action="{% url 'expenses:add' %}" method="post">
+            {% csrf_token %}
+            <button type="submit">Add expenses</button>
+        </form>
+
+        <p><a href="{% url 'password_change' %}">Password Change</a></p>
+
+        <form action="{% url 'logout' %}" method="post">
+            {% csrf_token %}
+            <button type="submit">Log Out</button>
+        </form>
+
+    {% else %}
+        <p>You are not logged in</p>
+        <p><a href="{% url 'password_reset' %}">Password Reset</a></p>
+        <a href="{% url 'login' %}">Log In</a><br>
+        <a href="{% url 'signup' %}">Sign up</a>
+    {% endif %}
+{% endblock %}
