@@ -82,6 +82,22 @@ def remove_expense(request, expense_id):
     return render(request, "expenses/confirm_delete.html", {"expense": expense})
 
 
+@login_required
+def update_expense(request, expense_id):
+    expense = get_object_or_404(Expense, id=expense_id, user=request.user)
+
+    if request.method == "POST":
+        form = ExpenseForm(request.POST, instance=expense)
+        if form.is_valid():
+            form.save()
+            return redirect("expenses:detail", category_id=expense.category.id)
+
+    else:
+        form = ExpenseForm(instance=expense)
+
+    return render(request, "expenses/update.html", {"form": form})
+
+
 def root_redirect(request):
     return redirect('login')
 

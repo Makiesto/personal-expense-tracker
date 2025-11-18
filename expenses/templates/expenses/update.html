@@ -1,0 +1,18 @@
+{% extends "expenses/base.html" %}
+
+{% block title %}Update{% endblock %}
+
+{% block content %}
+    {% if user.is_authenticated %}
+        <form method="POST">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit">Save changes</button>
+        </form>
+        {#        <a href="{% url 'expenses:detail' category_id=expense.id %}">Cancel</a>#}
+    {% else %}
+        <p>You are not logged in</p>
+        <a href="{% url 'login' %}">Log In</a><br>
+        <a href="{% url 'signup' %}">Sign up</a>
+    {% endif %}
+{% endblock %}

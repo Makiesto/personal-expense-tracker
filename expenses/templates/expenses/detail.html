@@ -5,14 +5,22 @@
 {% block content %}
     {% if user.is_authenticated %}
         <h1>{{ category.name }}</h1>
-        <ul>
-            {% for expense in category.expense_set.all %}
-                <div>
-                    {{ expense.expense_text }} ${{ expense.cost }} {{ expense.description }}
-                    <a href="{% url 'expenses:remove' expense_id=expense.id %}">Remove</a>
-                </div>
-            {% endfor %}
-        </ul>
+        {% if category.expense_set.all|length > 0 %}
+            <ul>
+                {% for expense in category.expense_set.all %}
+                    <div>
+                        {{ expense.expense_text }} ${{ expense.cost }} {{ expense.description }}
+                        <a href="{% url 'expenses:remove' expense_id=expense.id %}">Remove</a>
+                        <a href="{% url 'expenses:update' expense_id=expense.id %}">Update</a>
+                    </div>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <div>
+                <p>There is no expenses in this category.</p>
+            </div>
+        {% endif %}
+        <a href="{% url 'expenses:dashboard' %}">Return to dashboard</a>
     {% else %}
         <p>You are not logged in</p>
         <a href="{% url 'login' %}">Log In</a><br>

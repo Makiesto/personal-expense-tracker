@@ -11,7 +11,7 @@
                 {% for category in categories %}
                     <div class="category">
                         <a href=" {% url 'expenses:detail' category_id=category.id %} ">{{ category.name }}</a>
-                        ${{ category.total|default:0 }}
+                        ${{ category.total|default:0|floatformat:2 }}
                     </div>
 
                 {% endfor %}
@@ -24,7 +24,6 @@
         {% if expenses_list %}
             <div>
                 {% for expense in expenses_list %}
-                    {#            <li><a href="{% url 'expenses:detail' category.id %}">{{ category.category_text }}</a></li>#}
                     <div>{{ expense.expense_text }} ${{ expense.cost }} {{ expense.category }} Created
                         at: {{ expense.created_at }} Modified at: {{ expense.updated_at }}</div>
                 {% endfor %}
