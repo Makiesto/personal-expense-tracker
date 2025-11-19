@@ -22,12 +22,23 @@
 
         <h2>Expenses</h2>
         {% if expenses_list %}
-            <div>
-                {% for expense in expenses_list %}
-                    <div>{{ expense.expense_text }} ${{ expense.cost }} {{ expense.category }} Created
-                        at: {{ expense.created_at }} Modified at: {{ expense.updated_at }}</div>
+            <h3>Filter Expenses</h3>
+
+            <form method="get">
+                {{ filter.form.as_p }}
+                <button type="submit">Filter</button>
+            </form>
+
+            <ul>
+                {% for expense in filter.qs %}
+                     <div>
+                         {{ expense.expense_text }} ${{ expense.cost }} {{ expense.category }} Created
+                        at: {{ expense.created_at }} Modified at: {{ expense.updated_at }}
+                     </div>
+                {% empty %} <ul>No products found!</ul>
                 {% endfor %}
-            </div>
+            </ul>
+
         {% else %}
             <p>No expenses are available.</p>
         {% endif %}

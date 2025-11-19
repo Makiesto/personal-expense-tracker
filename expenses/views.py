@@ -3,9 +3,10 @@ from django.db.models import Sum, Q
 from django.shortcuts import render, get_object_or_404, redirect
 from django.views import generic
 
-from .forms import ExpenseForm
+from .forms import ExpenseForm, ExpenseFilterForm
 from .models import Category, Expense, UserCategory
 
+from . filters import ProductFilter
 
 # Create your views here.
 
@@ -24,9 +25,12 @@ def dashboard(request):
 
     expenses_list = Expense.objects.filter(user=request.user)
 
+    expense_filter = ProductFilter(request.GET, queryset=expenses_list)
+
     context = {
         "categories": categories,
         "expenses_list": expenses_list,
+        "filter": expense_filter,
     }
 
     return render(request, "expenses/dashboard.html", context)
