@@ -24,31 +24,42 @@
         {% if expenses_list %}
             <h3>Filter Expenses</h3>
 
-            <form method="get">
-                {{ filter.form.as_p }}
-                <button type="submit">Filter</button>
-            </form>
+            <div>
+                <form method="get">
+                    {{ filter.form.as_p }}
+                    <button type="submit">Filter</button>
+                </form>
 
-            <ul>
+                <br>
                 {% for expense in filter.qs %}
-                     <div>
-                         {{ expense.expense_text }} ${{ expense.cost }} {{ expense.category }} Created
+                    <div>
+                        {{ expense.expense_text }} ${{ expense.cost }} {{ expense.category }} Created
                         at: {{ expense.created_at }} Modified at: {{ expense.updated_at }}
-                     </div>
-                {% empty %} <ul>No products found!</ul>
+                    </div>
+                {% empty %}
+                    <ul>No products found!</ul>
                 {% endfor %}
-            </ul>
+                <a href={% url 'expenses:dashboard' %}>Clear results</a>
+            </div>
 
         {% else %}
             <p>No expenses are available.</p>
         {% endif %}
 
-        <form action="{% url 'expenses:add' %}" method="post">
-            {% csrf_token %}
-            <button type="submit">Add expenses</button>
-        </form>
+        <div>
+            <br>
+            <form action="{% url 'expenses:add' %}" method="post">
+                {% csrf_token %}
+                <button type="submit">Add expenses</button>
+            </form>
+            <br>
+        </div>
 
-        <p><a href="{% url 'password_change' %}">Password Change</a></p>
+        <div>
+            <br>
+            <a href="{% url 'password_change' %}">Password Change</a>
+            <br>
+        </div>
 
         <form action="{% url 'logout' %}" method="post">
             {% csrf_token %}
