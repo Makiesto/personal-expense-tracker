@@ -57,8 +57,8 @@ personal_expense_tracker/
 
 1. **Clone the repository**
    ```bash
-   git clone https://github.com/Makiesto/personal_expense_tracker.git
-   cd personal_expense_tracker
+   git clone https://github.com/Makiesto/personal-expense-tracker.git
+   cd personal-expense-tracker
    ```
 
 2. **Create a virtual environment**
