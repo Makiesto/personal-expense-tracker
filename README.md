@@ -226,21 +226,6 @@ Mateusz - [GitHub Profile](https://github.com/makiesto)
 - Django Documentation
 - django-filter library
 
-## Screenshots
-
-*Add screenshots of your application here*
-
-Example structure:
-```
-### Dashboard
-![Dashboard](screenshots/dashboard.png)
-
-### Add Expense
-![Add Expense](screenshots/add-expense.png)
-
-### Category Detail
-![Category Detail](screenshots/category-detail.png)
-```
 
 ## Contact
 
